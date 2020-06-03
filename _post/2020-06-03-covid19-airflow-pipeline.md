@@ -1,3 +1,18 @@
+---
+defaults:
+   # _posts
+   - scope:
+        path: ""
+        type: posts
+    values:
+        layout: single
+        author_profile: true
+        read_time: true
+        comments: true
+        share: true
+        related: true
+---
+
 # airflow-dag-covid19
 Basic data pipeline to handle covid19 data sources utilizing Python and Airlflow.
 
