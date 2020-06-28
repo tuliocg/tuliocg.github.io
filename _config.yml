@@ -97,7 +97,6 @@ author:
   avatar           : "/assets/images/bio-photo.jpg"
   bio              : "Just another data geek, eccentric coder, lofi listener"
   location         : "Florinaópolis-SC/BR"
-  email            : "tuliocgon@gmail.com"
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
