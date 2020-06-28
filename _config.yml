@@ -16,9 +16,9 @@ minimal_mistakes_skin    : "dark" # "air", "aqua", "contrast", "dark", "dirt", "
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Tulio's blog"
+title                    : "Tuliocg's blog"
 title_separator          : "-"
-subtitle                 : "Trying to find out to handle unstructured data"
+subtitle                 : "Trying to find out how to handle unstructured data"
 name                     : "Túlio Gonçalves"
 description              : "description TBD"
 url                      : # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
