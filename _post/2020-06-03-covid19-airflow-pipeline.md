@@ -4,7 +4,7 @@ defaults:
    - scope:
         path: ""
         type: posts
-    values:
+     values:
         layout: single
         author_profile: true
         read_time: true
