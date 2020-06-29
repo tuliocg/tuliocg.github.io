@@ -95,7 +95,7 @@ analytics:
 author:
   name             : "Túlio Gonçalves"
   avatar           : "/assets/images/bio-photo.jpg"
-  bio              : "Just another data geek, eccentric coder, lofi listener"
+  bio              : "Just another data geek and lofi listener"
   location         : "Florinaópolis-SC/BR"
   links:
     - label: "Email"
@@ -113,6 +113,9 @@ author:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/tuliocg"
+    - label: "Linkedin"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/tuliogoncalves"
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
       # url: "https://instagram.com/"
