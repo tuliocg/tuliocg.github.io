@@ -1,16 +1,6 @@
 ---
-defaults:
-   # _posts
-   - scope:
-        path: ""
-        type: posts
-     values:
-        layout: single
-        author_profile: true
-        read_time: true
-        comments: true
-        share: true
-        related: true
+layout: post
+title: Covid19 pipeline with Airflow/Py3
 ---
 
 # airflow-dag-covid19
