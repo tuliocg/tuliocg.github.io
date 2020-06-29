@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: single
 title: Covid19 pipeline with Airflow/Py3
 ---
 
