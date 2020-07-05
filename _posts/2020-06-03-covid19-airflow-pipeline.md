@@ -1,7 +1,7 @@
 ---
 layout: single
 title: Covid19 pipeline with Airflow/Py3
-categories: projects tutorials python airflow ETL:
+categories: projects tutorials python airflow ETL
 ---
 
 # airflow-dag-covid19
