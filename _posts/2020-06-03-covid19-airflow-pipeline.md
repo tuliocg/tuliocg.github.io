@@ -91,14 +91,12 @@ Besides that, google designed its interface module python/Big Query to work with
 Moving on, we initialize our first task on our DAG file (**covid19_datalake.py**) and looks like this :
 
 ```python
-# inside DAG definition
+    # inside DAG definition
 
-# ... task x
-
-extract_data = PythonOperator(
+    extract_data = PythonOperator(
         task_id='extract_data',
 	python_callable=data_extraction
-)
+    )
 `````
 Initialize task extract_data (PythonOperator), data runs imported function data_extraction
 
@@ -106,18 +104,18 @@ At first glance, we notice that we have this **data_extraction** function that w
 
 On file extract_data.py we get Big Query clients needed as well initialize our DataHandler object, which does all the heavy lifting on data related manipulation.
 
- ```python
- def data_extraction():
-     bqclient = get_bqclient()
-     bqstorageclient = get_bigstorageclient()
+```python
+    def data_extraction():
+        bqclient = get_bqclient()
+        bqstorageclient = get_bigstorageclient()
 
-     #Extracting raw data section
-     for source in DataHandler.data_source_list:
-     	data_handler = DataHandler(source)
-	if data_handler.source_type == 'Big Query'
-		data_handler.extract_data(bqclient, bqstorageclient)
-	elif data_handler.source_type == 'CSV':
-		data_handler.extract_data()
+	#Extracting raw data section
+        for source in DataHandler.data_source_list:
+            data_handler = DataHandler(source)
+            if data_handler.source_type == 'Big Query'
+                data_handler.extract_data(bqclient, bqstorageclient)
+            elif data_handler.source_type == 'CSV':
+                data_handler.extract_data()
  `````
 On data extraction, **DataHandler** runs through our list of 3 sources, retrieves the data and store it on two directories:
 
@@ -136,14 +134,14 @@ Given this scenario, we’ll be normalizing all 3 sources to a country/date fine
 To kick things off, we have a task definition very similar to what we’ve seen on extraction section.
 
 ```python
-# DAG tasks
+    # DAG tasks
 
     transform_data = PythonOperator(
         task_id='transform_data',
 	python_callable=data_transformation
     )
 
-   #DAG tasks
+    #DAG tasks
 ```
 On **data_transformation** we have the DataHandler picking a data source extension of choice (csv or pickle) to start.
 
@@ -183,7 +181,6 @@ Having the lat/long dataframe properly set, next is load our data source of curr
         deaths_map = 'total_deaths'
         cases_map = 'total_cases'
 ```
-
 Then we aggregate the data frame using groupby and agg. On .groupby section we define the granularity of our aggregation, and on .agg we define our measures and how they’ll be calculated
 
 > df_agg = df_ren.groupby([‘date’,’country’]).agg(
@@ -217,7 +214,6 @@ The last stage is to upload both raw and transformed data to s3 on .csv and .jso
         python_callable=data_load_s3
     )
 ```
-
 This time **data_load_s3** we’ll need to access a resource (S3 bucket), to do so, boto3 comes in to handle this interaction. Now AWS credential comes along, because its needed to allow the following operations. The core instructions to gather all resources we need from s3 are:
 
 > s3_resource = get_s3_resource()
@@ -253,3 +249,57 @@ Having this all set, last step its to commit it to the specified bucket name:
 And thats it, our algorithm we'll run through all files and upload them on properly paths, finishing our pipeline.
 
 Now we have to define tasks dependencies and setup somethings on Airflow and try to run the covid DAG.
+
+## Tasks Dependencies
+
+To set dependencies, on our DAG definition file (covid10_datalake.py) we have to explicit define it, one way to do it is:
+
+> extract_data >> transform_data >> load_data_s3
+
+This way, Airflow will schedule and run **extract_data**, then **transform_data** and finally **load_data_s3**. If any task fails the next one will not run automatically on default settings.
+
+## Setup Airflow
+
+Best case scenario, a basic setup is:
+
+> pip/pip3 install airflow
+> airflow initdb #initialize a sqlite database
+
+This should handle installation, to run it, two services have to be executed:
+
+> airflow webserver
+> airflow scheduler
+
+Make sure both are running, you should see something like this, and the webserver will be served on 0.0.0.0:8000 probably.
+
+If everything went well, its time to open the webserver, the index page presents all DAGS currently registered with a bunch of other informations, but our concern now is to ensure airflow finds our pipeline.
+
+DAGs have to be stored airflow root folder, on a directory named dags (by default !), if you clone the git repo, the file covid19_datalake.py has to be stored on ~/airflow/dags. This way airflow will find our project.
+
+My current directory structure is something like this:
+
+If everything is in place, opening 0.0.0.0:800 should have our DAG listed and scheduled to run every 2 hours.
+
+There’s a lot to cover here, I’ll focus on some resources, but feel free to mess around a bit.
+
+We still have to define our Airflow Variable that’s part of credential process, to do so, go on Admin -> Variables
+
+To define its pretty straight forward, the on key it has to be called GOOGLE_APPLICATION_CREDENTIALS and on val paste the path to your Google Big Query API credential, should be something like this /home/user/airflow/…/credentials/credential_file_name.json (without any qoutes).
+
+If you have your DAG showing up and the variable is set, last requiment its to install all packages need, this can be done thought pip install -r requirements.txt (on git).
+
+Great !!! Now we can run our DAG finally !!! On the very first panel, on links session, there’s a play button, press it and go go go, the three tasks we’ll be triggered as the previous succeeds.
+
+Clicking on DAG’s name you can access a lot of functionalities, one of my favorites is **Tree View**, its just a great overview of DAG and tasks instances, you can monitor every state, access logs, cancel runs, and much more, just by clicking on the bullets.
+
+You probably will face some permissions issues, a simple way to solve it is add rw permission on dags dir/subdir, a way to do it is:
+
+> chmod -R ugo+rw <dirname>
+
+Don’t forget to turn on your schedule if you want it to keep on running. This information and many others can be set on default_parameters on DAG definition file.
+
+## Wrapping up
+
+That’s it, we have built our data pipeline and deployed it on Airflow, there is room for a lot of improvement, feel free to try anything out ! Hope you guys enjoyed it, any doubts let me know throughout comments or git.
+
+Stay safe folks !
