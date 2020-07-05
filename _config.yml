@@ -259,7 +259,6 @@ tag_archive:
 #     category: /categories/:name/
 #     tag: /tags/:name/
 
-
 # HTML Compression
 # - https://jch.penibelst.de/
 compress_html:
@@ -267,17 +266,16 @@ compress_html:
   ignore:
     envs: development
 
-
 # Defaults
-#defaults:
+defaults:
   # _posts
-  #- scope:
-  #path: ""
-  #type: posts
-  #values:
-  #layout: single
-  #author_profile: true
-  #read_time: true
-  #comments: true
-  #share: true
-  #related: true
+  - scope:
+     path: ""
+     type: posts
+  values:
+     layout: single
+     author_profile: true
+     read_time: true
+     comments: true
+     share: true
+     related: true
