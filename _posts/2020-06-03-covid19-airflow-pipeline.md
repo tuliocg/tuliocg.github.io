@@ -10,8 +10,8 @@ By the end of this process, we’ll have designed a pipeline utilizing ETL princ
 Basic data pipeline to handle covid19 data sources utilizing Python and Airlflow. So let's jump right at it !
 
 ## Airflow Introduction
-source: airflow.apache.org
 
+![source: airflow.apache.org](/assets/images/post_covid19_airflow/airflow_logo.png)
 I have no intention spending much time on Airflow introductions, there are plenty of comprehensive resources that aims on this subject, but I’ll go over some basics concepts utilized on this project:
 
 Airflow is define by Apache as:
