@@ -12,6 +12,7 @@ Basic data pipeline to handle covid19 data sources utilizing Python and Airlflow
 ## Airflow Introduction
 
 ![source: airflow.apache.org](/assets/images/post_covid19_airflow/airflow_logo.png)
+
 I have no intention spending much time on Airflow introductions, there are plenty of comprehensive resources that aims on this subject, but I’ll go over some basics concepts utilized on this project:
 
 Airflow is define by Apache as:
@@ -52,6 +53,8 @@ After defining our data sources and goals, we start the ETL (extract, Transform,
 
 Takes care of getting data out of the sources, creating a staging area that’s basically mirrors the data on source, but it enables data transformations to be more manageable and predictable.
 
+![pandas](/assets/images/post_covid19_airflow/pandas.png)
+
 We’ll be staging extraction data on .csv and pickle, we could use and SQL repository or any other data storage, but this two suits very well for the reality of our processing and data sources.
 
 Pickle its an alternative way to store objects states on python, sometimes might be a better option than .csv for example, in this projection we are staging on both formats for sake of exemplification.
@@ -59,7 +62,6 @@ Pickle its an alternative way to store objects states on python, sometimes might
 ### Transformation layer:
 
 Commonly summarizes the data, adds business rules and dimensions information to the model, aiming mainly on enhancing querying and reporting, providing data with quality and availability.
-
 
 ### Load layer:
 
@@ -272,13 +274,19 @@ This should handle installation, to run it, two services have to be executed:
 
 Make sure both are running, you should see something like this, and the webserver will be served on 0.0.0.0:8000 probably.
 
+![airflow run](/assets/images/post_covid19_airflow/airflow_start.png)
+
 If everything went well, its time to open the webserver, the index page presents all DAGS currently registered with a bunch of other informations, but our concern now is to ensure airflow finds our pipeline.
 
 DAGs have to be stored airflow root folder, on a directory named dags (by default !), if you clone the git repo, the file covid19_datalake.py has to be stored on ~/airflow/dags. This way airflow will find our project.
 
 My current directory structure is something like this:
 
+![airflow tree](/assets/images/post_covid19_airflow/airflow_tree.png)
+
 If everything is in place, opening 0.0.0.0:800 should have our DAG listed and scheduled to run every 2 hours.
+
+![airflow dags](/assets/images/post_covid19_airflow/airflow_dags.png)
 
 There’s a lot to cover here, I’ll focus on some resources, but feel free to mess around a bit.
 
@@ -291,6 +299,8 @@ If you have your DAG showing up and the variable is set, last requiment its to i
 Great !!! Now we can run our DAG finally !!! On the very first panel, on links session, there’s a play button, press it and go go go, the three tasks we’ll be triggered as the previous succeeds.
 
 Clicking on DAG’s name you can access a lot of functionalities, one of my favorites is **Tree View**, its just a great overview of DAG and tasks instances, you can monitor every state, access logs, cancel runs, and much more, just by clicking on the bullets.
+
+![airflow tree](/assets/images/post_covid19_airflow/airflow_jbs.png)
 
 You probably will face some permissions issues, a simple way to solve it is add rw permission on dags dir/subdir, a way to do it is:
 
