@@ -11,14 +11,14 @@
 # https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/#installing-the-theme
 
 # theme                  : "minimal-mistakes-jekyll"
-remote_theme           : "mmistakes/minimal-mistakes@4.19.2"
+remote_theme             : "mmistakes/minimal-mistakes@4.19.2"
 minimal_mistakes_skin    : "dark" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 # Site Settings
 locale                   : "en-US"
 title                    : "Tuliocg's blog"
 title_separator          : "-"
-subtitle                 : "Trying to find out how to handle unstructured data"
+subtitle                 : "Data related topics discussed in depth"
 name                     : "Túlio Gonçalves"
 description              : "A blog about data engineering and analytics"
 url                      : "https://tuliocg.github.io"
