@@ -9,7 +9,7 @@ During this proving times, qualified and reliable data sources are key to enhanc
 By the end of this process, we’ll have designed a pipeline utilizing ETL principles, enabling quality reports to be built from the data sources we’ll make available on AWS S3.
 Basic data pipeline to handle covid19 data sources utilizing Python and Airlflow. So let's jump right at it !
 
-Project's source code repository: https://github.com/tuliocg/airflow-dag-covid19
+[Project's source code repository](https://github.com/tuliocg/airflow-dag-covid19)
 
 ## Airflow Introduction
 
